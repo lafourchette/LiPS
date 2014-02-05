@@ -1,0 +1,18 @@
+{
+  "name": "amqp-lips",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Yassine Bouzekri, Alexis Tondelier",
+  "license": "MIT",
+  "dependencies": {
+    "amqp": "~0.1.8"
+  },
+  "devDependencies": {
+    "grunt-cli": "~0.1.13",
+    "grunt": "~0.4.2"
+  }
+}

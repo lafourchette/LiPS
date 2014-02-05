@@ -1,0 +1,21 @@
+{
+  "name": "lips",
+  "version": "0.0.0",
+  "description": "Listener Plug Service : unified interface for subscribing to events emitted by a variety of services",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "listener",
+    "event"
+  ],
+  "author": "Yassine Bouzekri, Alexis Tondelier",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt-cli": "~0.1.13",
+    "grunt": "~0.4.2"
+  },
+  "dependencies": {}
+}
