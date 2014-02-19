@@ -1,6 +1,7 @@
 "use strict";
 
 var util = require('util');
+var assert = require('assert');
 
 /**
  *
@@ -62,7 +63,7 @@ LipsImplementation.prototype.on = function(eventOptions, callback) {
 function createImplementation(listen ,implementationParser) {
 
     //TODO: assertions
-    assert.ok(typeof listen === "function", 'listenerInstallation should be a function');
+    assert(typeof listen === "function", 'listenerInstallation should be a function');
 
     /**
      * @inheritDoc LipsImplementation

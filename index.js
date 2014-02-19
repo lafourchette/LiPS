@@ -1,6 +1,6 @@
 "use strict";
 
-
+var assert = require('assert');
 
 /**
  * Returns a LiPS implementation as a new class inheriting {@link LipsImplementation}
