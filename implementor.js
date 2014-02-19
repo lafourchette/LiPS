@@ -2,7 +2,6 @@
 
 var util = require('util');
 
-
 /**
  *
  * @param {object} [options]
@@ -82,4 +81,8 @@ function createImplementation(listen ,implementationParser) {
     return SpecificLipsImplementation;
 }
 
+/**
+ * @exports implementor
+ * @property {Function} createImplementation
+ */
 exports.createImplementation = createImplementation;

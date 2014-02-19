@@ -1,12 +1,22 @@
 "use strict";
 
-exports.create = function(options) {
 
-    var implementation;
+
+/**
+ * Returns a LiPS implementation as a new class inheriting {@link LipsImplementation}
+ *
+ * @param {object} options
+ * @param {String} options.implementation
+ * @param {Function} [options.parser]
+ * @returns {SpecificLipsImplementation}
+ */
+function create(options) {
+
+    var implementationModule;
     if(options) {
         if(options.implementation) {
             try {
-                implementation = require('./lips-modules/'+options.implementation+'/index.js');
+                implementationModule = require('./lips-modules/'+options.implementation+'/index.js');
             } catch(err) {
                 console.error(err);
             }
@@ -16,10 +26,17 @@ exports.create = function(options) {
             assert.ok(typeof options.parser === "function", 'the parser should be a function');
         }
 
-        if(implementation) {
-            return implementation.create(options.parser);
+        if(implementationModule) {
+            return implementationModule.create(options.parser);
         }
+    } else {
+        console.error('options argument needs to be an object');
     }
 
-
 }
+
+/**
+ * @exports index
+ * @property {Function} create
+ */
+exports.create = create;
