@@ -1,4 +1,4 @@
-# node-mysql
+# LiPS
 
 TODO: link to travis
 <!--
