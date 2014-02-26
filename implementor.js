@@ -11,7 +11,7 @@ var LipsImplementation = require('./LipsImplementation.js');
  * @param {Function} [implementationParser]
  * @returns {SpecificLipsImplementation}
  */
-function createImplementation(listen ,implementationParser) {
+function createImplementation(listen, implementationParser) {
 
     //TODO: assertions
     assert(typeof listen === "function", 'listenerInstallation should be a function');

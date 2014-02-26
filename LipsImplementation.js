@@ -15,9 +15,8 @@ function LipsImplementation(options) {
     }
 
     this._events = {};
+    this._increment = 0;
 }
-
-LipsImplementation._increment = 0;
 
 /**
  *
@@ -38,13 +37,13 @@ LipsImplementation.prototype.parser = function(content) {
 LipsImplementation.prototype.on = function(eventOptions, callback) {
     this.listen(eventOptions, this.parser, callback);
 
-    var currentIncrement = LipsImplementation._increment;
+    var currentIncrement = this._increment;
 
     this._events[currentIncrement] = {
         eventOptions: eventOptions,
         callback: callback
     };
-    LipsImplementation._increment++;
+    this._increment++;
 
     var self = this;
 
