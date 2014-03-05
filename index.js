@@ -3,7 +3,7 @@
 var assert = require('assert');
 
 /**
- * Returns a LiPS implementation as a new class inheriting {@link LipsImplementation}
+ * Returns a LiPS implementation as a new instance of {@link LipsImplementation}
  *
  * @param {object} options
  * @param {String} options.implementation

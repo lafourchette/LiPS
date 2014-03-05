@@ -21,14 +21,8 @@ describe('LipsImplementation', function() {
         done();
     });
 
-    it('should initialize the internal events object and increment', function(done) {
+    it('should initialize the internal events object ', function(done) {
         instanceWithParser._events.should.be.type('object');
-        instanceWithParser._increment.should.equal(0);
-        done();
-    });
-
-    it('should have _increment equal 0', function(done) {
-        instanceWithParser._increment.should.equal(0);
         done();
     });
 
@@ -47,22 +41,32 @@ describe('LipsImplementation', function() {
             callback = function() {};
 
         beforeEach(function(done) {
-            instanceWithParser.listen = sinon.spy();
+            instanceWithParser.addListener = sinon.spy();
+            instanceWithParser.removeListener = sinon.spy();
+            sinon.spy(instanceWithParser, 'on');
             instanceWithParser.on(eventOptions, callback);
             done();
         });
 
         it('should call listen with args ( eventOptions, instance parser, callback)', function(done) {
-            instanceWithParser.listen.withArgs(eventOptions, instanceWithParser.parser, callback).calledOnce.should.be.ok;
+            instanceWithParser.addListener.withArgs(eventOptions, instanceWithParser.parser, callback).calledOnce.should.be.ok;
             done();
         });
 
-        it('should have incremented constructor _increment property', function(done) {
-            instanceWithParser._increment.should.equal(1);
-            done();
-        });
+        describe('returnValue', function() {
 
-        it('should attach the eventOptions and callback as an object')
+            it('should be a function', function(done) {
+                instanceWithParser.on.returnValues[0].should.be.type('function');
+                done();
+            });
+
+            it('should call provided removeListener with the right args', function(done) {
+                instanceWithParser.on.returnValues[0]();
+                instanceWithParser.removeListener.withArgs(eventOptions, instanceWithParser.parser, callback).calledOnce.should.be.ok;
+                done();
+            });
+
+        });
 
     });
 

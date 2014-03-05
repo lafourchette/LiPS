@@ -7,20 +7,19 @@ var path = require('path');
 
 var implementor = require('../../implementor.js');
 
-var Implementation = implementor.createImplementation(listen);
+var Implementation = implementor.createImplementation(addListener, removeListener);
 
 /**
- * file-lips specific listen function
+ * file-lips specific addListener function
  *
  * @param {object} eventOptions
  * @param {String} eventOptions.filepath
  * @param {String} eventOptions.readingMethod ('append', 'new')
  * @param {String} [eventOptions.fileEncoding = 'utf8']
  * @param {Function} [parser]
- * @param
- * @param callback
+ * @param {Function} callback
  */
-function listen(eventOptions, parser, callback) {
+function addListener(eventOptions, parser, callback) {
 
     assert(typeof eventOptions === "object" && eventOptions, 'event options should be an object');
     assert(eventOptions.filepath, 'filepath should be provided and not be empty');
@@ -49,6 +48,20 @@ function listen(eventOptions, parser, callback) {
             watcher.close();
         };
     }
+}
+
+/**
+ * file-lips specific removeListener function
+ *
+ * @param {object} eventOptions
+ * @param {String} eventOptions.filepath
+ * @param {String} eventOptions.readingMethod ('append', 'new')
+ * @param {String} [eventOptions.fileEncoding = 'utf8']
+ * @param {Function} [parser]
+ * @param {Function} callback
+ */
+function removeListener(eventOptions, parser, callback) {
+
 }
 
 /**
@@ -154,6 +167,6 @@ module.exports = {
     create: create,
     _newListener: newListener,
     _appendListener: appendListener,
-    _listen: listen
+    _addListener: addListener
 };
 

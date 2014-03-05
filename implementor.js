@@ -11,10 +11,11 @@ var LipsImplementation = require('./LipsImplementation.js');
  * @param {Function} [implementationParser]
  * @returns {SpecificLipsImplementation}
  */
-function createImplementation(listen, implementationParser) {
+function createImplementation(addListener, removeListener, implementationParser) {
 
     //TODO: assertions
-    assert(typeof listen === "function", 'listenerInstallation should be a function');
+    assert(typeof addListener === "function", 'addListener should be a function');
+    assert(typeof removeListener === "function", 'removeListener should be a function');
 
     /**
      * @inheritDoc LipsImplementation
@@ -27,8 +28,8 @@ function createImplementation(listen, implementationParser) {
     if(implementationParser && typeof implementationParser === "function") {
         SpecificLipsImplementation.prototype.parser = implementationParser;
     }
-    SpecificLipsImplementation.prototype.listen = listen;
-
+    SpecificLipsImplementation.prototype.addListener = addListener;
+    SpecificLipsImplementation.prototype.removeListener = removeListener;
 
     return SpecificLipsImplementation;
 }

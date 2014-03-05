@@ -15,7 +15,6 @@ function LipsImplementation(options) {
     }
 
     this._events = {};
-    this._increment = 0;
 }
 
 /**
@@ -35,20 +34,12 @@ LipsImplementation.prototype.parser = function(content) {
  * @returns {Function} disable the listener
  */
 LipsImplementation.prototype.on = function(eventOptions, callback) {
-    this.listen(eventOptions, this.parser, callback);
-
-    var currentIncrement = this._increment;
-
-    this._events[currentIncrement] = {
-        eventOptions: eventOptions,
-        callback: callback
-    };
-    this._increment++;
+    this.addListener(eventOptions, this.parser, callback);
 
     var self = this;
 
     return function off() {
-        delete self._events[currentIncrement];
+        self.removeListener(eventOptions, self.parser, callback);
     };
 };
 
