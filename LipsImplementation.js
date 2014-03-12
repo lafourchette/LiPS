@@ -34,12 +34,12 @@ LipsImplementation.prototype.parser = function(content) {
  * @returns {Function} disable the listener
  */
 LipsImplementation.prototype.on = function(eventOptions, callback) {
-    this.addListener(eventOptions, this.parser, callback);
+    var listener = this.addListener(eventOptions, this.parser, callback);
 
     var self = this;
 
     return function off() {
-        self.removeListener(eventOptions, self.parser, callback);
+        self.removeListener(listener, eventOptions, self.parser, callback);
     };
 };
 

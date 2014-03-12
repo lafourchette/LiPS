@@ -61,8 +61,8 @@ describe('LipsImplementation', function() {
             });
 
             it('should call provided removeListener with the right args', function(done) {
-                instanceWithParser.on.returnValues[0]();
-                instanceWithParser.removeListener.withArgs(eventOptions, instanceWithParser.parser, callback).calledOnce.should.be.ok;
+                var listener = instanceWithParser.on.returnValues[0]();
+                instanceWithParser.removeListener.withArgs(listener, eventOptions, instanceWithParser.parser, callback).calledOnce.should.be.ok;
                 done();
             });
 
