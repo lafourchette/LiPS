@@ -22,5 +22,7 @@
     "request": "~2.34.0",
     "mocha": "~1.17.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "death": "~0.1.0"
+  }
 }
