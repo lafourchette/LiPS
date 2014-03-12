@@ -4,8 +4,10 @@
   "description": "Listener Plug Service : unified interface for subscribing to events emitted by a variety of services",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec --require should --ui bdd spec/*.js",
-    "start": "node index.js"
+    "test": "npm run-script test-js",
+    "test-js": "./node_modules/.bin/mocha -R spec --require should --ui bdd spec/*.js",
+    "start": "npm run-script demo",
+    "demo": "node demo.js"
   },
   "keywords": [
     "listener",
