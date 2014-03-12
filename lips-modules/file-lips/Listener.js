@@ -7,7 +7,7 @@ var path = require('path');
 /**
  *
  * @param {object} eventOptions
- * @param {Function} [parser]
+ * @param {Function} parser
  * @param {Function} callback
  * @constructor
  */
@@ -130,6 +130,9 @@ Listener.prototype._appendFileReadStreamOnData = function(data) {
  */
 Listener.prototype.newListener = function() {
     var self = this;
+
+    var basepath = this.eventOptions.filepath;
+    var dirname = path.dirname(basepath);
 
     this.watcher = fs.watch(dirname);
 
