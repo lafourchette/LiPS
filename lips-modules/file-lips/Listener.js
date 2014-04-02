@@ -115,6 +115,7 @@ Listener.prototype._appendFileReadStreamOnData = function(data) {
         parsedData = this.parser(data);
     } catch (parsingError) {
         this.callback(new Error('parsing error'));
+        return;
     }
     this.callback(null, parsedData);
     this.inc += data.length;
@@ -177,6 +178,7 @@ Listener.prototype._newFileReadFileCallback = function(err, data) {
             parsedData = this.parser(data);
         } catch (parsingError) {
             this.callback(new Error('parsing error'));
+            return ;
         }
         this.callback(null, parsedData);
     }
