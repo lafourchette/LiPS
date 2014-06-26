@@ -8,7 +8,8 @@
     "test-lips": "./node_modules/.bin/mocha -R spec --require should --ui bdd spec/*.js",
     "test-lips-modules": "./node_modules/.bin/mocha -R spec --require should --ui bdd lips-modules/*/spec/*.js",
     "start": "npm run-script demo",
-    "demo": "node demo.js"
+    "demo-file-lips": "node demo_file_lips.js",
+    "demo-socket.io-lips": "node demo_socket.io_lips.js"
   },
   "keywords": [
     "listener",

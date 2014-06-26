@@ -9,7 +9,8 @@
   "author": "Yassine Bouzekri, Alexis Tondelier",
   "license": "MIT",
   "dependencies": {
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "socket.io-client": "^1.0.6"
   },
   "devDependencies": {
     "grunt-cli": "~0.1.13",
