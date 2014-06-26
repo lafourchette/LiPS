@@ -343,6 +343,7 @@ describe('file-lips', function() {
                 beforeEach(function(){
                     sinon.stub(fs, 'readFile').callsArgWith(2, {}, 'test');
                     sinon.spy(Listener.prototype, '_newFileReadFileCallback');
+                    sinon.stub(fs, 'stat').callsArgWith(1, null, {size: 5, atime: new Date()});
                 });
                 describe('with the right filepath', function () {
                     beforeEach(function(){
@@ -351,7 +352,6 @@ describe('file-lips', function() {
 
                     it('should call readFile', function(done){
                         fs.readFile.calledWith(newEventOptions.filepath, newEventOptions.fileEncoding).should.be.ok;
-
                         done();
                     })
 
@@ -376,6 +376,7 @@ describe('file-lips', function() {
                 afterEach(function(){
                     Listener.prototype._newFileReadFileCallback.restore();
                     fs.readFile.restore();
+                    fs.stat.restore();
                 });
             });
 
