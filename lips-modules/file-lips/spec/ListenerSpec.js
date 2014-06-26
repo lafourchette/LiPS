@@ -372,7 +372,7 @@ describe('file-lips', function() {
                         done();
                     })
 
-                })
+                });
                 afterEach(function(){
                     Listener.prototype._newFileReadFileCallback.restore();
                     fs.readFile.restore();
