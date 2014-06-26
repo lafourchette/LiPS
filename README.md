@@ -47,10 +47,12 @@ Additionnal thanks:
 * [Guillermo Rauch][] - Socket.IO
 * [Felix Geisendörfer][] - node-mysql
 * [Theo Schlossnagle][] - node-amqp
+* [Mikeal Rogers][] - watch
 
 [Guillermo Rauch]: http://devthought.com/
 [Felix Geisendörfer]: https://github.com/felixge
 [Theo Schlossnagle]: https://github.com/postwait
+[Mikeal Rogers]: https://github.com/mikeal
 
 ## Sponsors
 

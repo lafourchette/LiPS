@@ -156,8 +156,13 @@ Listener.prototype._newFileWatcher = function(event, filename) {
     var basename = path.basename(basepath);
 
     if(filename == basename) {
-        fs.readFile(basepath, self.fileEncoding, function(err, data) {
-            self._newFileReadFileCallback(err, data);
+        //TODO: tests
+        fs.stat(basepath, function(err, stats) {
+            if(!err && stats.size && Math.abs(stats.atime - new Date()) < 1e3) {
+                fs.readFile(basepath, self.fileEncoding, function(err, data) {
+                    self._newFileReadFileCallback(err, data);
+                });
+            }
         });
     }
 };

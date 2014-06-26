@@ -8,6 +8,7 @@ var assert = require('assert');
  * @param {object} options
  * @param {String} options.implementation
  * @param {Function} [options.parser]
+ * @param {object} [options.config]
  * @returns {SpecificLipsImplementation}
  */
 function create(options) {

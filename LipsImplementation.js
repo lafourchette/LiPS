@@ -9,7 +9,7 @@
  */
 function LipsImplementation(options) {
     if(options) {
-        if(options.parser) {
+        if(typeof options.parser === 'function') {
             this.parser = options.parser;
         }
     }
