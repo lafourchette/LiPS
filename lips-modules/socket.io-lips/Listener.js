@@ -9,7 +9,7 @@ var ioClient = require('socket.io-client');
  *
  * @param {object} eventOptions
  * @param {string} eventOptions.host
- * @param {number} eventOptions.post
+ * @param {number} eventOptions.port
  * @param {string} eventOptions.eventName
  * @param {Function} parser
  * @param {Function} callback
@@ -19,7 +19,6 @@ function Listener(eventOptions, parser, callback) {
     this.eventOptions = eventOptions;
     this.parser = parser;
     this.callback = callback;
-    this.inc = 0;
     this.init();
 }
 
@@ -27,19 +26,25 @@ function Listener(eventOptions, parser, callback) {
  * Initialization, called in constructor
  */
 Listener.prototype.init = function() {
-    var self = this;
     this.io = ioClient(this.eventOptions.host + ':' + this.eventOptions.port);
-    this.io.on(this.eventOptions.eventName, function(data) {
-        var parsedData;
-        try {
-            parsedData = self.parser(data);
-        } catch (parsingError) {
-            self.callback(new Error('parsing error'));
-            return ;
-        }
-        self.callback(null, parsedData);
-    });
+    this.io.on(this.eventOptions.eventName, this._parseData.bind(this));
 };
+
+/**
+ * Parse data and call callback
+ * @param data
+ * @private
+ */
+Listener.prototype._parseData = function(data) {
+    var parsedData;
+    try {
+        parsedData = this.parser(data);
+    } catch (parsingError) {
+        this.callback(new Error('parsing error'));
+        return ;
+    }
+    this.callback(null, parsedData);
+}
 
 /**
  * Close the watcher and remove the pointer avoiding memory leaks

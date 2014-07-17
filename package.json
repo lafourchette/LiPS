@@ -7,6 +7,7 @@
     "test": "npm run-script test-lips && npm run-script test-lips-modules",
     "test-lips": "./node_modules/.bin/mocha -R spec --require should --ui bdd spec/*.js",
     "test-lips-modules": "./node_modules/.bin/mocha -R spec --require should --ui bdd lips-modules/*/spec/*.js",
+    "test-socket.io-modules": "./node_modules/.bin/mocha -R spec --require common --ui bdd lips-modules/socket.io-lips/spec/*.js",
     "start": "npm run-script demo",
     "demo-file-lips": "node demo_file_lips.js",
     "demo-socket.io-lips": "node demo_socket.io_lips.js"
@@ -18,13 +19,16 @@
   "author": "Yassine Bouzekri, Alexis Tondelier",
   "license": "MIT",
   "devDependencies": {
-    "grunt-cli": "~0.1.13",
-    "grunt": "~0.4.2",
     "async": "~0.2.10",
-    "should": "~3.1.3",
-    "sinon": "~1.8.2",
+    "chai": "^1.9.1",
+    "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.13",
+    "mocha": "^1.20.1",
     "request": "~2.34.0",
-    "mocha": "~1.17.1"
+    "rewire": "^2.1.0",
+    "should": "~3.1.3",
+    "sinon": "^1.10.3",
+    "sinon-chai": "^2.5.0"
   },
   "dependencies": {
     "death": "~0.1.0"
