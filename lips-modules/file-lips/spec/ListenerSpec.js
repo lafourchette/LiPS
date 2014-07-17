@@ -356,7 +356,7 @@ describe('file-lips', function() {
                     })
 
                     it('should call _newFileReadFileCallback with the rigth args', function(done){
-                        newInstance._newFileReadFileCallback.lastCall.args.should.containDeep([{}, 'test']);
+                        newInstance._newFileReadFileCallback.should.have.been.calledWithExactly({}, 'test');
                         done();
                     });
 

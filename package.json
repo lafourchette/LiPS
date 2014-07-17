@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run-script test-lips && npm run-script test-lips-modules",
-    "test-lips": "./node_modules/.bin/mocha -R spec --require should --ui bdd spec/*.js",
-    "test-lips-modules": "./node_modules/.bin/mocha -R spec --require should --ui bdd lips-modules/*/spec/*.js",
-    "test-socket.io-modules": "./node_modules/.bin/mocha -R spec --require common --ui bdd lips-modules/socket.io-lips/spec/*.js",
+    "test-lips": "./node_modules/.bin/mocha -R spec --require common --ui bdd spec/*.js",
+    "test-lips-modules": "./node_modules/.bin/mocha -R spec --require common --ui bdd lips-modules/*/spec/*.js",
     "start": "npm run-script demo",
     "demo-file-lips": "node demo_file_lips.js",
     "demo-socket.io-lips": "node demo_socket.io_lips.js"

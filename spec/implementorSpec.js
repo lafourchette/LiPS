@@ -49,7 +49,7 @@ describe('implementor', function() {
             });
 
             it('should be a function', function(done) {
-                SpecificLipsImplementation.should.be.type('function');
+                SpecificLipsImplementation.should.be.a('function');
                 done();
             });
 

@@ -1,5 +1,4 @@
-var sinon      = require('sinon'),
-    Listener = require('../Listener.js'),
+var Listener = require('../Listener.js'),
     fs = require('fs'),
     mysql = require('mysql');
 
@@ -78,8 +77,10 @@ describe('mysql-lips', function() {
 
                     instance.createTrigger();
 
-                    instance.runQuery.lastCall.args[0].should.match(new RegExp('CREATE TRIGGER eventName_\\d+_\\d+ AFTER INSERT ON my_table FOR EACH ROW \nBEGIN \n    SELECT \\* FROM my_table WHERE id = NEW.id INTO OUTFILE \\?; \nEND'));
-                    instance.runQuery.lastCall.args[1].should.containEql(eventOptions.filepath);
+                    instance.runQuery.should.have.been.calledWith(
+                        sinon.match(new RegExp('CREATE TRIGGER eventName_\\d+_\\d+ AFTER INSERT ON my_table FOR EACH ROW \nBEGIN \n    SELECT \\* FROM my_table WHERE id = NEW.id INTO OUTFILE \\?; \nEND')),
+                        [ eventOptions.filepath ]
+                    );
 
                     instance.runQuery.restore();
                     done();
@@ -103,23 +104,15 @@ describe('mysql-lips', function() {
             });
 
             describe('remove', function() {
-
-                it('should close the watcher and nullify its reference', function(done) {
+                it('should close the watcher and nullify its reference and call dropTrigger', function(done) {
+                    sinon.stub(instance, 'dropTrigger');
                     var watcher = instance.watcher = {
                         close: sinon.spy()
                     };
                     instance.remove();
 
-                    watcher.close.calledOnce.should.be.ok;
+                    watcher.close.should.have.been.called;
                     (instance.watcher === null).should.be.ok;
-
-                    done();
-                });
-
-                it('should call dropTrigger', function(done) {
-                    sinon.stub(instance, 'dropTrigger');
-
-                    instance.remove();
 
                     instance.dropTrigger.calledOnce.should.be.ok;
 
@@ -299,7 +292,7 @@ describe('mysql-lips', function() {
                     instance.processOutfile('filepath');
 
                 });
-                
+
                 it('should call fs.stat on the given filepath', function(done) {
 
                     fs.stat.calledOnce.should.be.ok;
@@ -351,7 +344,7 @@ describe('mysql-lips', function() {
 
 
             describe('_readFileCallback', function(){
-                
+
                 describe('with error', function(){
                     var err = {};
                     beforeEach(function(){

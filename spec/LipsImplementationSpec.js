@@ -1,4 +1,3 @@
-var sinon      = require('sinon');
 var LipsImplementation = require('../LipsImplementation.js');
 
 describe('LipsImplementation', function() {
@@ -22,7 +21,7 @@ describe('LipsImplementation', function() {
     });
 
     it('should initialize the internal events object ', function(done) {
-        instanceWithParser._events.should.be.type('object');
+        instanceWithParser._events.should.be.a('object');
         done();
     });
 
@@ -56,7 +55,7 @@ describe('LipsImplementation', function() {
         describe('returnValue', function() {
 
             it('should be a function', function(done) {
-                instanceWithParser.on.returnValues[0].should.be.type('function');
+                instanceWithParser.on.returnValues[0].should.be.a('function');
                 done();
             });
 
