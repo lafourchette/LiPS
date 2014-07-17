@@ -27,10 +27,17 @@ function Listener(eventOptions, parser, callback) {
  * Initialization, called in constructor
  */
 Listener.prototype.init = function() {
-    console.log('CLIENT', 'init');
+    var self = this;
     this.io = ioClient(this.eventOptions.host + ':' + this.eventOptions.port);
-    this.io.on(this.eventOptions.eventName, function(message) {
-        console.log('CLIENT', 'MESSAGE', message);
+    this.io.on(this.eventOptions.eventName, function(data) {
+        var parsedData;
+        try {
+            parsedData = self.parser(data);
+        } catch (parsingError) {
+            self.callback(new Error('parsing error'));
+            return ;
+        }
+        self.callback(null, parsedData);
     });
 };
 
