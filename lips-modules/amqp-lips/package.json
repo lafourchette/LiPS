@@ -9,7 +9,7 @@
   "author": "Yassine Bouzekri, Alexis Tondelier",
   "license": "MIT",
   "dependencies": {
-    "amqp": "~0.1.8"
+    "amqp": "^0.1.6"
   },
   "devDependencies": {
     "grunt-cli": "~0.1.13",

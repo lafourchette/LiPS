@@ -9,7 +9,8 @@
     "test-lips-modules": "./node_modules/.bin/mocha -R spec --require common --ui bdd lips-modules/*/spec/*.js",
     "start": "npm run-script demo",
     "demo-file-lips": "node demo_file_lips.js",
-    "demo-socket.io-lips": "node demo_socket.io_lips.js"
+    "demo-socket.io-lips": "node demo_socket.io_lips.js",
+    "demo-amqp-lips": "node demo_amqp_lips.js"
   },
   "keywords": [
     "listener",
