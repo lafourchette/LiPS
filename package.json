@@ -1,6 +1,6 @@
 {
-  "name": "lips",
-  "version": "0.0.0",
+  "name": "LiPS",
+  "version": "0.1.0",
   "description": "Listener Plug Service : unified interface for subscribing to events emitted by a variety of services",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,9 @@
     "start": "npm run-script demo",
     "demo-file-lips": "node demo_file_lips.js",
     "demo-socket.io-lips": "node demo_socket.io_lips.js",
-    "demo-amqp-lips": "node demo_amqp_lips.js"
+    "demo-amqp-lips": "node demo_amqp_lips.js",
+    "demo-mysql-lips": "node demo_mysql_lips.js",
+    "postinstall": "make install-modules"
   },
   "keywords": [
     "listener",

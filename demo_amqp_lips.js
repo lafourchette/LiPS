@@ -7,12 +7,12 @@ var LiPS = require('./index.js');
 var amqpLiPS = LiPS.create({
     implementation: 'amqp-lips'
 });
-console.log(amqpLiPS);
+
 var listener = amqpLiPS.on({
-    host: '192.168.33.33',
-    port: '5673',
-    login: 'lafourchette',
-    password: 'lafourchette',
+    host: 'localhost',
+    port: '5672',
+    login: 'login',
+    password: 'password',
     vhost: '/',
     queueName: 'lips.queue.test',
     autoDelete: false,

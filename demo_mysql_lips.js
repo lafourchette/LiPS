@@ -9,39 +9,23 @@ var mysqlLiPS = LiPS.create({
 });
 
 var listener = mysqlLiPS.on({
-    filepath: '/home/administrateur/tmp/mysql_result',
+    filepath: '/home/user_directory/tmp/mysql_result',
     config: {
         host: 'localhost',
         user: 'root',
-        password: 'bay1203',
-        database: 'portal'
+        password: 'password',
+        database: 'database'
     },
     eventName: 'test',
-    table: 'restaurant',
+    table: 'my_table',
     eventType: 'AFTER UPDATE'
 }, function (err, data){
 
 });
-//
-//var listener2 = mysqlLiPS.on({
-//    filepath: '/home/administrateur/tmp/mysql_result1',
-//    config: {
-//        host: 'localhost',
-//        user: 'root',
-//        password: 'bay1203',
-//        database: 'portal'
-//    },
-//    eventName: 'test',
-//    table: 'restaurant',
-//    eventType: 'BEFORE UPDATE'
-//}, function (err, data){
-//
-//});
 
 ON_DEATH(function() {
     console.log('terminating listeners');
     listener();
-//    listener2();
     setTimeout(function() {
         console.log('exiting process');
         process.exit();
