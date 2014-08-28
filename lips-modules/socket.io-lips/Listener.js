@@ -13,9 +13,10 @@ var ioClient = require('socket.io-client');
  * @param {string} eventOptions.eventName
  * @param {Function} parser
  * @param {Function} callback
+ * @alias module:socketIO-lips.SocketIOLipsListener
  * @constructor
  */
-function Listener(eventOptions, parser, callback) {
+function SocketIOLipsListener(eventOptions, parser, callback) {
     this.eventOptions = eventOptions;
     this.parser = parser;
     this.callback = callback;
@@ -25,7 +26,7 @@ function Listener(eventOptions, parser, callback) {
 /**
  * Initialization, called in constructor
  */
-Listener.prototype.init = function() {
+SocketIOLipsListener.prototype.init = function() {
     this.io = ioClient(this.eventOptions.host + ':' + this.eventOptions.port);
     this.io.on(this.eventOptions.eventName, this._parseData.bind(this));
 };
@@ -35,7 +36,7 @@ Listener.prototype.init = function() {
  * @param data
  * @private
  */
-Listener.prototype._parseData = function(data) {
+SocketIOLipsListener.prototype._parseData = function(data) {
     var parsedData;
     try {
         parsedData = this.parser(data);
@@ -51,7 +52,7 @@ Listener.prototype._parseData = function(data) {
  *
  * @returns {boolean}
  */
-Listener.prototype.remove = function() {
+SocketIOLipsListener.prototype.remove = function() {
     if(this.io) {
         this.io.disconnect();
         this.io = null;
@@ -59,4 +60,4 @@ Listener.prototype.remove = function() {
 };
 
 
-module.exports = Listener;
+module.exports = SocketIOLipsListener;

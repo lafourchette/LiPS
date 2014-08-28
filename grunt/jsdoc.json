@@ -1,0 +1,8 @@
+{
+    "dist": {
+        "src": ["implementor.js", "LipsImplementation.js", "lips-modules/*/*.js"],
+        "options": {
+            "destination": "doc"
+        }
+    }
+}

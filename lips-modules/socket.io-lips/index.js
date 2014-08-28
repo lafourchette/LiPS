@@ -1,3 +1,7 @@
+/**
+ * @module socketIO-lips
+ */
+
 "use strict";
 
 var assert = require('assert');
@@ -27,7 +31,7 @@ function addListener(eventOptions, parser, callback) {
 /**
  * socket.io specific removeListener function
  *
- * @param {Listener} listener
+ * @param {AMQPLipsListener} listener
  */
 function removeListener(listener) {
     if(listener) {

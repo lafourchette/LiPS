@@ -1,3 +1,7 @@
+/**
+ * @module lips
+ */
+
 "use strict";
 
 var util = require('util');
@@ -9,6 +13,7 @@ var LipsImplementation = require('./LipsImplementation.js');
  *
  * @param {Function} listen
  * @param {Function} [implementationParser]
+ *
  * @returns {SpecificLipsImplementation}
  */
 function createImplementation(addListener, removeListener, implementationParser) {
@@ -34,8 +39,4 @@ function createImplementation(addListener, removeListener, implementationParser)
     return SpecificLipsImplementation;
 }
 
-/**
- * @exports implementor
- * @property {Function} createImplementation
- */
 exports.createImplementation = createImplementation;

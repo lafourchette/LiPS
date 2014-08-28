@@ -1,3 +1,7 @@
+/**
+ * @module mysql-lips
+ */
+
 "use strict";
 
 var assert = require('assert');
@@ -37,7 +41,7 @@ function addListener(eventOptions, parser, callback) {
 /**
  * file-lips specific removeListener function
  *
- * @param {Listener} listener
+ * @param {AMQPLipsListener} listener
  */
 function removeListener(listener) {
     if(listener) {

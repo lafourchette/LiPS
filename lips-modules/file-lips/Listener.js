@@ -9,9 +9,10 @@ var path = require('path');
  * @param {object} eventOptions
  * @param {Function} parser
  * @param {Function} callback
+ * @alias module:file-lips.FileLipsListener
  * @constructor
  */
-function Listener(eventOptions, parser, callback) {
+function FileLipsListener(eventOptions, parser, callback) {
     this.eventOptions = eventOptions;
     this.parser = parser;
     this.callback = callback;
@@ -23,7 +24,7 @@ function Listener(eventOptions, parser, callback) {
 /**
  * Initialization, called in constructor
  */
-Listener.prototype.init = function() {
+FileLipsListener.prototype.init = function() {
     if(this.eventOptions) {
         this.fileEncoding = this.eventOptions.fileEncoding;
         if(!this.fileEncoding || this.fileEncoding.constructor !== String) {
@@ -47,7 +48,7 @@ Listener.prototype.init = function() {
  *
  * @returns {boolean}
  */
-Listener.prototype.remove = function() {
+FileLipsListener.prototype.remove = function() {
     if(this.watcher) {
         this.watcher.close();
         this.watcher = null;
@@ -64,7 +65,7 @@ Listener.prototype.remove = function() {
  * - create readStream starting at an incremented cursor
  * - calls the provided callback with the parsed appended chunk of data
  */
-Listener.prototype.appendListener = function() {
+FileLipsListener.prototype.appendListener = function() {
     var self = this;
 
     var basepath = this.eventOptions.filepath;
@@ -88,7 +89,7 @@ Listener.prototype.appendListener = function() {
  * @param {string} filename
  * @private
  */
-Listener.prototype._appendedFileWatcher = function(event, filename) {
+FileLipsListener.prototype._appendedFileWatcher = function(event, filename) {
     var self = this;
 
     var basepath = this.eventOptions.filepath;
@@ -108,7 +109,7 @@ Listener.prototype._appendedFileWatcher = function(event, filename) {
  * @param data
  * @private
  */
-Listener.prototype._appendFileReadStreamOnData = function(data) {
+FileLipsListener.prototype._appendFileReadStreamOnData = function(data) {
     data = data.slice(0, -1);
     var parsedData;
     try {
@@ -129,7 +130,7 @@ Listener.prototype._appendFileReadStreamOnData = function(data) {
  * - reads the while file
  * - calls the provided callback with the parsed file content
  */
-Listener.prototype.newListener = function() {
+FileLipsListener.prototype.newListener = function() {
     var self = this;
 
     var basepath = this.eventOptions.filepath;
@@ -149,7 +150,7 @@ Listener.prototype.newListener = function() {
  * @param {string} filename
  * @private
  */
-Listener.prototype._newFileWatcher = function(event, filename) {
+FileLipsListener.prototype._newFileWatcher = function(event, filename) {
     var self = this;
 
     var basepath = this.eventOptions.filepath;
@@ -174,7 +175,7 @@ Listener.prototype._newFileWatcher = function(event, filename) {
  * @param data
  * @private
  */
-Listener.prototype._newFileReadFileCallback = function(err, data) {
+FileLipsListener.prototype._newFileReadFileCallback = function(err, data) {
     if(err) {
         this.callback(err);
     } else {
@@ -189,4 +190,4 @@ Listener.prototype._newFileReadFileCallback = function(err, data) {
     }
 };
 
-module.exports = Listener;
+module.exports = FileLipsListener;

@@ -19,9 +19,10 @@ var amqp = require('amqp');
  * @param {string} eventOptions.exclusive
  * @param {Function} parser
  * @param {Function} callback
+ * @alias module:amqp-lips.AMQPLipsListener
  * @constructor
  */
-function Listener(eventOptions, parser, callback) {
+function AMQPLipsListener(eventOptions, parser, callback) {
     this.eventOptions = eventOptions;
     this.parser = parser;
     this.callback = callback;
@@ -31,13 +32,13 @@ function Listener(eventOptions, parser, callback) {
 /**
  * Initialization, called in constructor
  */
-Listener.prototype.init = function() {
+AMQPLipsListener.prototype.init = function() {
     this.connection = amqp.createConnection({
         host: this.eventOptions.host,
         port: this.eventOptions.port,
         login: this.eventOptions.login,
         password: this.eventOptions.password,
-        vhost: this.eventOptions.vhost,
+        vhost: this.eventOptions.vhost
     }, {defaultExchangeName: "amq.topic"});
     this.connection.on('ready', this._createQueue.bind(this));
 };
@@ -45,7 +46,7 @@ Listener.prototype.init = function() {
 /**
  * Create Queue
  */
-Listener.prototype._createQueue = function () {
+AMQPLipsListener.prototype._createQueue = function () {
     // Use the default 'amq.topic' exchange
 
     this.connection.queue(this.eventOptions.queueName, {
@@ -53,13 +54,13 @@ Listener.prototype._createQueue = function () {
         durable: this.eventOptions.durable,
         exclusive: this.eventOptions.exclusive
     }, this._bindQueue.bind(this));
-}
+};
 
 /**
  * Bind queue and subscribe into it
  * @param {Queue} q
  */
-Listener.prototype._bindQueue = function (q) {
+AMQPLipsListener.prototype._bindQueue = function (q) {
     var self = this;
     this.queue = q;
     // Catch all messages
@@ -76,7 +77,7 @@ Listener.prototype._bindQueue = function (q) {
  * @param data
  * @private
  */
-Listener.prototype._parseData = function(data) {
+AMQPLipsListener.prototype._parseData = function(data) {
     var parsedData;
     try {
         parsedData = this.parser(data);
@@ -92,9 +93,9 @@ Listener.prototype._parseData = function(data) {
  *
  * @returns {boolean}
  */
-Listener.prototype.remove = function() {
+AMQPLipsListener.prototype.remove = function() {
     this.queue.unbind('');
 };
 
 
-module.exports = Listener;
+module.exports = AMQPLipsListener;

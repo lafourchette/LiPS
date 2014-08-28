@@ -1,10 +1,11 @@
 "use strict";
 
-
 /**
  *
  * @param {object} [options]
  * @param {Function} [options.parser]
+ *
+ * @alias module:lips.LipsImplementation
  * @constructor
  */
 function LipsImplementation(options) {

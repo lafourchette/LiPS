@@ -23,6 +23,8 @@
     "chai": "^1.9.1",
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.13",
+    "grunt-jsdoc": "^0.6.0",
+    "jsdoc": "^3.3.0-alpha9",
     "mocha": "^1.20.1",
     "request": "~2.34.0",
     "rewire": "^2.1.0",
@@ -31,6 +33,7 @@
     "sinon-chai": "^2.5.0"
   },
   "dependencies": {
-    "death": "~0.1.0"
+    "death": "~0.1.0",
+    "winston": "^0.7.3"
   }
 }

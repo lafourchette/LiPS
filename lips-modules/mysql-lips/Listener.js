@@ -1,8 +1,9 @@
 "use strict";
 
-var mysql = require('mysql'),
-    path  = require('path'),
-    fs    = require('fs');
+var mysql  = require('mysql'),
+    path   = require('path'),
+    fs     = require('fs'),
+    logger = require('./logger');
 
 /**
  *
@@ -15,57 +16,58 @@ var mysql = require('mysql'),
  * @param {string} eventOptions.filepath Path to the file used as mysql trigger output (the file path is suffixed so that it's different for each Listener instance)
  * @param {Function} parser
  * @param {Function} callback
+ * @alias module:mysql-lips.MysqlLipsListener
  * @constructor
  */
-function Listener(eventOptions, parser, callback) {
+function MysqlLipsListener(eventOptions, parser, callback) {
     this.eventOptions = eventOptions;
     this.parser = parser;
     this.callback = callback;
     this.mysqlConn = null;
-    this.eventName = [this.eventOptions.eventName, +new Date(), Listener.uniqueEventId].join('_');
+    this.eventName = [this.eventOptions.eventName, +new Date(), MysqlLipsListener.uniqueEventId].join('_');
     this.inc = 0;
 
     if(!this.eventTypeRegexp.test(this.eventOptions.eventType)) {
         throw 'invalid eventType: eventType should match ' + this.eventTypeRegexp.toString();
     }
 
-    Listener.uniqueEventId++;
+    MysqlLipsListener.uniqueEventId++;
 }
 
-Listener.prototype.eventTypeRegexp = /(BEFORE|AFTER) (INSERT|UPDATE|DELETE)/;
+MysqlLipsListener.prototype.eventTypeRegexp = /(BEFORE|AFTER) (INSERT|UPDATE|DELETE)/;
 
-Listener.prototype.outfileEncoding = 'utf8';
+MysqlLipsListener.prototype.outfileEncoding = 'utf8';
 
-Listener.uniqueEventId = 0;
+MysqlLipsListener.uniqueEventId = 0;
 
 /**
  * Create connection to database
  */
-Listener.prototype.createConnection = function () {
+MysqlLipsListener.prototype.createConnection = function () {
     this.eventOptions.config.multipleStatements = true;
     this.mysqlConn = mysql.createConnection(this.eventOptions.config);
 };
 
 /**
- *
+ * Create mysql trigger for defined options
  */
-Listener.prototype.createTrigger = function () {
+MysqlLipsListener.prototype.createTrigger = function () {
     var sql = "CREATE TRIGGER "+this.eventName+" "+this.eventOptions.eventType+" ON "+this.eventOptions.table+" FOR EACH ROW \nBEGIN \n    SELECT * FROM "+this.eventOptions.table+" WHERE "+this.eventOptions.field+" = NEW."+this.eventOptions.field+" INTO OUTFILE ?; \nEND";
     this.runQuery(sql, [this.eventOptions.filepath]);
 };
 
 /**
- *
+ * Remove created mysql trigger
  */
-Listener.prototype.dropTrigger = function () {
+MysqlLipsListener.prototype.dropTrigger = function () {
     var sql = "DROP TRIGGER "+this.eventName;
     this.runQuery(sql);
 };
 
 /**
- *
+ * Stop watcher and drop mysql trigger
  */
-Listener.prototype.remove = function (){
+MysqlLipsListener.prototype.remove = function (){
     if(this.watcher) {
         this.watcher.close();
         this.watcher = null;
@@ -80,7 +82,7 @@ Listener.prototype.remove = function (){
  * @param {array} [values] Query parameters
  * @param {function} [cb] Callback function
  */
-Listener.prototype.runQuery = function (sql, values, cb){
+MysqlLipsListener.prototype.runQuery = function (sql, values, cb){
     this.createConnection();
     var self = this;
     if (!(values instanceof Array)) {
@@ -98,7 +100,7 @@ Listener.prototype.runQuery = function (sql, values, cb){
  * @param {array} values Query parameters
  * @param {function} [cb] Callback function
  */
-Listener.prototype.execQuery = function(sql, values, cb) {
+MysqlLipsListener.prototype.execQuery = function(sql, values, cb) {
     var self = this;
     this.mysqlConn.query(sql, values, function(err, results) {
         if(typeof cb === 'function' ) {
@@ -115,7 +117,7 @@ Listener.prototype.execQuery = function(sql, values, cb) {
 /**
  * Initialize the directory watcher and listen to the change event
  */
-Listener.prototype.initWatcher = function() {
+MysqlLipsListener.prototype.initWatcher = function() {
     var filepath = this.eventOptions.filepath;
     var dirname = path.dirname(filepath);
     var basename = path.basename(filepath);
@@ -137,16 +139,18 @@ Listener.prototype.initWatcher = function() {
  * Reads the file and call the callback on the read data
  * @param {string} renamedFilepath
  */
-Listener.prototype.processOutfile = function(renamedFilepath) {
+MysqlLipsListener.prototype.processOutfile = function(renamedFilepath) {
     var self = this;
     fs.stat(renamedFilepath, function(err, stats) {
-        console.log('STAT', arguments);
+        logger.info('STAT', arguments);
         if(!err && stats.size && Math.abs(stats.atime - new Date()) < 1e3) {
             fs.readFile(renamedFilepath, self.outfileEncoding, function(err, data) {
-                console.log('READ', data);
+                logger.info('READ', data);
                 fs.unlink(renamedFilepath, function(err) {
                     if(!err) {
-                        console.log(renamedFilepath + ' deleted successfully');
+                        logger.info(renamedFilepath + ' deleted successfully');
+                    } else {
+                        logger.error('UNLINK ' + renamedFilepath, err);
                     }
                 });
                 self._readFileCallback(err, data);
@@ -161,7 +165,7 @@ Listener.prototype.processOutfile = function(renamedFilepath) {
  * @param {string} [data]
  * @private
  */
-Listener.prototype._readFileCallback = function(err, data) {
+MysqlLipsListener.prototype._readFileCallback = function(err, data) {
     if(err) {
         this.callback(err);
     } else {
@@ -176,4 +180,4 @@ Listener.prototype._readFileCallback = function(err, data) {
     }
 };
 
-module.exports = Listener;
+module.exports = MysqlLipsListener;
