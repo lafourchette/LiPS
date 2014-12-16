@@ -1,5 +1,5 @@
 {
-  "name": "LiPS",
+  "name": "lips",
   "version": "0.1.0",
   "description": "Listener Plug Service : unified interface for subscribing to events emitted by a variety of services",
   "main": "index.js",
